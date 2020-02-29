@@ -18,6 +18,10 @@ uint32_t ROTR(uint32_t x, int n){
     return (x>>n) | (x << (32 - n));
 }
 
+uint32_t Sig0(uint32_t x){
+    return ROTR(x, 2) ^ ROTR(x, 13) ^ ROTR(x, 22);
+}
+
 int main(int argc, char *argv[]){
     uint32_t x = 0x0f0f0f0f;
     uint32_t y = 0xcccccccc;
