@@ -14,6 +14,10 @@ uint32_t SHR(uint32_t x, int n){
     return x>>n;
 }
 
+uint32_t ROTR(uint32_t x, int n){
+    return (x>>n) | (x << (32 - n));
+}
+
 int main(int argc, char *argv[]){
     uint32_t x = 0x0f0f0f0f;
     uint32_t y = 0xcccccccc;
