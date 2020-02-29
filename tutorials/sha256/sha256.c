@@ -26,6 +26,14 @@ uint32_t Sig1(uint32_t x){
     return ROTR(x, 6) ^ ROTR(x, 11) ^ ROTR(x, 25);
 }
 
+uint32_t Sig2(uint32_t x){
+    return ROTR(x, 4) ^ ROTR(x, 18) ^ SHR(x, 3);
+}
+
+uint32_t Sig3(uint32_t x){
+    return ROTR(x, 17) ^ ROTR(x, 19) ^ SHR(x, 10);
+}
+
 int main(int argc, char *argv[]){
     uint32_t x = 0x0f0f0f0f;
     uint32_t y = 0xcccccccc;
