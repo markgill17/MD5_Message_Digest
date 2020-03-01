@@ -8,5 +8,9 @@ union endian{
 
 int main(int argc, char* argv ){
 
-    return 0;
+    union endian my_union;
+    my_union.si = 0xff;
+
+    printf("16bit: %04" PRIX16 "\n", my_union.si);
+    printf(" 8bit: %02" PRIX8 "%02" PRIX8 "\n", my_union.ei[0], my_union.ei[1]);
 }
