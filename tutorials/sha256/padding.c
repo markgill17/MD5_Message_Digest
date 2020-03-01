@@ -2,6 +2,12 @@
 // includes formatters for printing 64 bit integers
 #include<inttypes.h>
 
+union block{
+    uint64_t sixFour[8];
+    uint32_t threeTwo[16];
+    uint8_t eight[64];
+};
+
 uint64_t NoZerosBytes(uint64_t nobits){
     // the number of bits from the file
     uint64_t result = 512ULL - (nobits % 512ULL);
@@ -31,10 +37,15 @@ int main(int argc, char* argv){
 
     uint8_t b;
 
+    uint64_t nobits;
+
+    union block M;
+    uint8_t i;
+
     //  '&' is the address of b not the value of b
     // nobits += 8 gets the number of bits read
     for(;fread(&b, 1, 1, infile) == 1; nobits += 8){
-        printf("%02x", b);
+        printf("%02" PRIx8, M.eight[i]);
     }
 
     // this is appended to the message block

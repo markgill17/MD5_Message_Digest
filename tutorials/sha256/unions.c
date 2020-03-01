@@ -3,7 +3,7 @@
 
 union endian{
     uint8_t ei[2];
-    uint16_t ai;
+    uint16_t si;
 };
 
 int main(int argc, char* argv ){
