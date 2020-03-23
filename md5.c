@@ -3,7 +3,10 @@
 #include <string.h>
 #include <stdint.h>
 
-void md5() {
+void md5(uint8_t *initial_message, size_t initial_length) {
+
+    uint8_t *message = NULL;
+
     uint32_t r[] = {7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
                     5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20,
                     4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
@@ -27,4 +30,13 @@ void md5() {
         0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
         0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391};
 
+}
+
+int main(int argcount, char **arg){
+    
+    char *message = arg[1];
+    size_t length = strlen(message);
+
+    md5(message, length);
+    
 }
