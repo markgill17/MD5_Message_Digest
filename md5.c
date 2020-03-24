@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdint.h>
 
+uint32_t hash0, hash1, hash2, hash3;
+
 void md5(uint8_t *initial_message, size_t initial_length) {
 
     uint8_t *message = NULL;
@@ -29,6 +31,11 @@ void md5(uint8_t *initial_message, size_t initial_length) {
         0x655b59c3, 0x8f0ccc92, 0xffeff47d, 0x85845dd1,
         0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
         0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391};
+
+    hash0 = 0x67452301;
+    hash1 = 0xefcdab89;
+    hash2 = 0x98badcfe;
+    hash3 = 0x10325476;
 
 }
 
