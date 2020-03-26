@@ -3,17 +3,22 @@
 #include <string.h>
 #include <stdint.h>
 
+// variables to hold vaues of the hash
 uint32_t hash0, hash1, hash2, hash3;
 
+// md5 takes the parameters of initial message and initial length
 void md5(uint8_t *initial_message, size_t initial_length) {
 
+    // initialising the empty message
     uint8_t *message = NULL;
 
+    // r holds values of shifts in each round
     uint32_t r[] = {7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
                     5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20,
                     4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
                     6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21};
 
+    // pre-defined heash values obtained by: K[i] = floor(2^32 * abs(sin(i+1)))
     uint32_t k[] = {
         0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
         0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
@@ -37,6 +42,14 @@ void md5(uint8_t *initial_message, size_t initial_length) {
     hash2 = 0x98badcfe;
     hash3 = 0x10325476;
 
+    int new_length = ((((initial_length + 8) / 64) + 1) * 64) - 8;
+ 
+    message = calloc(new_length + 64, 1);
+    memcpy(message, initial_message, initial_length);
+    message[initial_length] = 128;
+
+    uint32_t bits_length = 8*initial_length;
+    memcpy(message + new_length, &bits_length, 4); 
 }
 
 int main(int argcount, char **arg){
