@@ -50,6 +50,50 @@ void md5(uint8_t *initial_message, size_t initial_length) {
 
     uint32_t bits_length = 8*initial_length;
     memcpy(message + new_length, &bits_length, 4); 
+
+    int offset;
+    for(offset=0; offset<new_length; offset += (512/8)) {
+        uint32_t *w = (uint32_t *) (message + offset);
+
+        uint32_t a = hash0;
+        uint32_t b = hash1;
+        uint32_t c = hash2;
+        uint32_t d = hash3;
+ 
+        uint32_t i;
+        for(i = 0; i<64; i++) {
+            uint32_t f, g;
+ 
+             if (i < 16) {
+                f = (b & c) | ((~b) & d);
+                g = i;
+            } else if (i < 32) {
+                f = (d & b) | ((~d) & c);
+                g = (5*i + 1) % 16;
+            } else if (i < 48) {
+                f = b ^ c ^ d;
+                g = (3*i + 5) % 16;          
+            } else {
+                f = c ^ (b | (~d));
+                g = (7*i) % 16;
+            }
+
+            uint32_t temp = d;
+            d = c;
+            c = b;
+            printf("rotateLeft(%x + %x + %x + %x, %d)\n", a, f, k[i], w[g], r[i]);
+            b = b + LEFTROTATE((a + f + k[i] + w[g]), r[i]);
+            a = temp;
+ 
+        }
+        hash0 += a;
+        hash1 += b;
+        hash2 += c;
+        hash3 += d;
+    }
+    // cleanup
+    free(message);
+
 }
 
 int main(int argcount, char **arg){
@@ -59,4 +103,22 @@ int main(int argcount, char **arg){
 
     md5(message, length);
     
+    uint8_t *p;
+ 
+    // display result
+ 
+    p=(uint8_t *)&hash0;
+    printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], hash0);
+ 
+    p=(uint8_t *)&hash1;
+    printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], hash1);
+ 
+    p=(uint8_t *)&hash2;
+    printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], hash2);
+ 
+    p=(uint8_t *)&hash3;
+    printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], hash0);
+    puts("");
+ 
+    return 0;
 }
