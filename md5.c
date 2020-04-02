@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdint.h>
 
+#define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
+
 // variables to hold vaues of the hash
 uint32_t hash0, hash1, hash2, hash3;
 
