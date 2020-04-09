@@ -39,20 +39,30 @@ void md5(uint8_t *initial_message, size_t initial_length) {
         0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
         0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391};
 
+    // giving variables some values
     hash0 = 0x67452301;
     hash1 = 0xefcdab89;
     hash2 = 0x98badcfe;
     hash3 = 0x10325476;
 
+    // appending "1" to input
     int new_length = ((((initial_length + 8) / 64) + 1) * 64) - 8;
  
+    // calloc is a memory allocator
+    // add "0" until congruent with 448, modulo 512
     message = calloc(new_length + 64, 1);
+
+    // creating copy of memory block
     memcpy(message, initial_message, initial_length);
+
+    // apending "1" to message
     message[initial_length] = 128;
 
+    // adding 64 bit representation to equate to 512 bits
     uint32_t bits_length = 8*initial_length;
     memcpy(message + new_length, &bits_length, 4); 
 
+    // 
     int offset;
     for(offset=0; offset<new_length; offset += (512/8)) {
         uint32_t *w = (uint32_t *) (message + offset);
@@ -66,6 +76,7 @@ void md5(uint8_t *initial_message, size_t initial_length) {
         for(i = 0; i<64; i++) {
             uint32_t f, g;
  
+            // using aux functions from RFC doc
              if (i < 16) {
                 f = (b & c) | ((~b) & d);
                 g = i;
@@ -105,21 +116,22 @@ int main(int argcount, char **arg){
 
     md5(message, length);
     
-    uint8_t *p;
+    uint8_t *hash;
  
     // display result
+    printf("Your message is: %s\n", message);
  
-    p=(uint8_t *)&hash0;
-    printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], hash0);
+    hash=(uint8_t *)&hash0;
+    printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
  
-    p=(uint8_t *)&hash1;
-    printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], hash1);
+    hash=(uint8_t *)&hash1;
+    printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash1);
  
-    p=(uint8_t *)&hash2;
-    printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], hash2);
+    hash=(uint8_t *)&hash2;
+    printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash2);
  
-    p=(uint8_t *)&hash3;
-    printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], hash0);
+    hash=(uint8_t *)&hash3;
+    printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
     puts("");
  
     return 0;
