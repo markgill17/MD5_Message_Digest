@@ -1,8 +1,14 @@
+/*
+    Mark Gill
+    G00348787@gmit.ie
+    this code was adapted from https://gist.github.com/creationix/4710780#file-md5-c-L4
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 
+// function used to left rotate
 #define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
 
 // variables to hold vaues of the hash
@@ -62,7 +68,7 @@ void md5(uint8_t *initial_message, size_t initial_length) {
     uint32_t bits_length = 8*initial_length;
     memcpy(message + new_length, &bits_length, 4); 
 
-    // 
+    // put message in blocks, seperated every 512 bits
     int offset;
     for(offset=0; offset<new_length; offset += (512/8)) {
         uint32_t *w = (uint32_t *) (message + offset);
@@ -91,6 +97,7 @@ void md5(uint8_t *initial_message, size_t initial_length) {
                 g = (7*i) % 16;
             }
 
+            // puts hold on d
             uint32_t temp = d;
             d = c;
             c = b;
@@ -99,6 +106,7 @@ void md5(uint8_t *initial_message, size_t initial_length) {
             a = temp;
  
         }
+        // adding hash to output
         hash0 += a;
         hash1 += b;
         hash2 += c;
