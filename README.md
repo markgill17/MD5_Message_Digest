@@ -31,5 +31,10 @@ All of my documentation research can be found [here](https://tools.ietf.org/html
 All of my video research was done by following videos by Dr Ian McLoughlin.
 
 ## References
-https://tools.ietf.org/html/rfc1321
-https://learnonline.gmit.ie/course/view.php?id=557
+* https://tools.ietf.org/html/rfc1321
+* https://learnonline.gmit.ie/course/view.php?id=557
+* https://gist.github.com/creationix/4710780
+* http://practicalcryptography.com/hashes/md5-hash/
+* https://rosettacode.org/wiki/MD5#C
+* https://dox.ipxe.org/md5_8c_source.html
+* https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf

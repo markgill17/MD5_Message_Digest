@@ -2,7 +2,8 @@
 Overview.md is this file. This file was requested in a revision of the project requirements. The requirements were changed amid the COVID-19 crisis. This pandemic meant we would not be able to meet our lecturer again to do a presentation. This file will outline:
 * what the project is
 * how to run it
-* a look at the algorithm used
+* a look at the algorithm used,
+
 and
 * the complexity of the code.
 
@@ -110,5 +111,10 @@ A collision attack is when multiple outputs are compared to see if they're the s
 The most common counter measure is a salt. A salt is when you grab the hash of an input, then add a random set of characters, then hash it again.
 
 # References
-https://tools.ietf.org/html/rfc1321
-https://learnonline.gmit.ie/course/view.php?id=557
+* https://tools.ietf.org/html/rfc1321
+* https://learnonline.gmit.ie/course/view.php?id=557
+* https://gist.github.com/creationix/4710780
+* http://practicalcryptography.com/hashes/md5-hash/
+* https://rosettacode.org/wiki/MD5#C
+* https://dox.ipxe.org/md5_8c_source.html
+* https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
