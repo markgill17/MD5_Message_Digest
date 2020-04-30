@@ -7,6 +7,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <time.h>
+#include <ctype.h>
+#include <unistd.h>
 
 // function used to left rotate
 #define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
@@ -101,7 +104,7 @@ void md5(uint8_t *initial_message, size_t initial_length) {
             uint32_t temp = d;
             d = c;
             c = b;
-            printf("rotateLeft(%x + %x + %x + %x, %d)\n", a, f, k[i], w[g], r[i]);
+            //printf("rotateLeft(%x + %x + %x + %x, %d)\n", a, f, k[i], w[g], r[i]);
             b = b + LEFTROTATE((a + f + k[i] + w[g]), r[i]);
             a = temp;
  
@@ -117,30 +120,187 @@ void md5(uint8_t *initial_message, size_t initial_length) {
 
 }
 
-int main(int argcount, char **arg){
-    
-    char *message = arg[1];
-    size_t length = strlen(message);
+int main(int argcount, char **argv){
 
-    md5(message, length);
-    
     uint8_t *hash;
- 
-    // display result
-    printf("Your message is: %s\n", message);
- 
-    hash=(uint8_t *)&hash0;
-    printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
- 
-    hash=(uint8_t *)&hash1;
-    printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash1);
- 
-    hash=(uint8_t *)&hash2;
-    printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash2);
- 
-    hash=(uint8_t *)&hash3;
-    printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
-    puts("");
- 
+
+    // messaged to be hashed will be the 3rd argument passed
+    char *message = argv[2];
+    size_t length = strlen(message);
+        
+
+    int i;
+    while ((i = getopt (argcount, argv, ":s:t:h")) != -1){
+
+        switch(i){
+            case 's':  
+                md5(message, length); 
+                
+                // display result
+                printf("Your message is: %s\n", message);
+            
+                hash=(uint8_t *)&hash0;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
+            
+                hash=(uint8_t *)&hash1;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash1);
+            
+                hash=(uint8_t *)&hash2;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash2);
+            
+                hash=(uint8_t *)&hash3;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
+                puts("");
+
+                hash0 = 0x67452301;
+                hash1 = 0xefcdab89;
+                hash2 = 0x98badcfe;
+                hash3 = 0x10325476;                
+            break;
+            case 't':
+
+                /*
+                    I had to hardcode the test value along with the length of the test value. I couln't get it to work with variables, unfortunately.
+                */
+                
+                md5("", 0); 
+            
+                printf("Your message is: \nThe result should be: d41d8cd98f00b204e9800998ecf8427e\n");
+                printf("Actual result: ");
+
+                hash=(uint8_t *)&hash0;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
+            
+                hash=(uint8_t *)&hash1;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash1);
+            
+                hash=(uint8_t *)&hash2;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash2);
+            
+                hash=(uint8_t *)&hash3;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
+                puts("");
+
+                // resetting hash codes 
+                hash0 = 0x67452301;
+                hash1 = 0xefcdab89;
+                hash2 = 0x98badcfe;
+                hash3 = 0x10325476;
+
+                printf("\n================================================================\n");
+
+
+                md5("a", 1); 
+            
+                printf("Your message is: a\nThe result should be: 0cc175b9c0f1b6a831c399e269772661\n");
+                printf("Actual result: ");
+
+
+                hash=(uint8_t *)&hash0;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
+            
+                hash=(uint8_t *)&hash1;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash1);
+            
+                hash=(uint8_t *)&hash2;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash2);
+            
+                hash=(uint8_t *)&hash3;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
+                puts("");
+
+                hash0 = 0x67452301;
+                hash1 = 0xefcdab89;
+                hash2 = 0x98badcfe;
+                hash3 = 0x10325476;
+
+                printf("\n================================================================\n");
+
+
+                md5("abc", 3); 
+            
+                printf("Your message is: abc\nThe result should be: 900150983cd24fb0d6963f7d28e17f72\n");
+                printf("Actual result: ");
+
+                hash=(uint8_t *)&hash0;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
+            
+                hash=(uint8_t *)&hash1;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash1);
+            
+                hash=(uint8_t *)&hash2;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash2);
+            
+                hash=(uint8_t *)&hash3;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
+                puts("");
+
+                hash0 = 0x67452301;
+                hash1 = 0xefcdab89;
+                hash2 = 0x98badcfe;
+                hash3 = 0x10325476;
+
+                printf("\n================================================================\n");
+
+
+                md5("message digest", 14); 
+            
+                printf("Your message is: message digest\nThe result should be: f96b697d7cb7938d525a2f31aaf161d0\n");
+                printf("Actual result: ");
+
+                hash=(uint8_t *)&hash0;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
+            
+                hash=(uint8_t *)&hash1;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash1);
+            
+                hash=(uint8_t *)&hash2;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash2);
+            
+                hash=(uint8_t *)&hash3;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
+                puts("");
+
+                hash0 = 0x67452301;
+                hash1 = 0xefcdab89;
+                hash2 = 0x98badcfe;
+                hash3 = 0x10325476;
+
+                printf("\n================================================================\n");
+
+
+                md5("abcdefghijklmnopqrstuvwxyz", 26); 
+            
+                printf("Your message is: abcdefghijklmnopqrstuvwxyz\nThe result should be: c3fcd3d76192e4007dfb496cca67e13b\n");
+                printf("Actual result: ");
+
+                hash=(uint8_t *)&hash0;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
+            
+                hash=(uint8_t *)&hash1;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash1);
+            
+                hash=(uint8_t *)&hash2;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash2);
+            
+                hash=(uint8_t *)&hash3;
+                printf("%2.2x%2.2x%2.2x%2.2x", hash[0], hash[1], hash[2], hash[3], hash0);
+                puts("");
+
+                hash0 = 0x67452301;
+                hash1 = 0xefcdab89;
+                hash2 = 0x98badcfe;
+                hash3 = 0x10325476;
+
+                printf("\n================================================================\n");
+
+            break;
+            case 'h':
+                printf("-s 'string here'    run md5 hash on string\n");
+                printf("-t     run tests\n");
+                printf("-h     provides help\n");
+                break;
+        }
+    }
     return 0;
 }

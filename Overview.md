@@ -21,7 +21,7 @@ Linux has a native/pre-installed C compiler so there is no need to install one.
 * Search for name of new directory using ```ls```
 * Navigate to the directory you just cloned using ```cd /TOA-project```
 * Run ```gcc TOA-project/md5.c -o md5``` to generate the md5 from my code.
-* Run ```./md5 "YOUR TEST STRING"``` to get the MD5 hash of the string you inputted
+* Run ```./md5 -s "YOUR TEST STRING"``` to get the MD5 hash of the string you inputted
 
 ### Running on Windows
 My way of running a C compiler on Windows was to install a Linux subsystem.
@@ -32,9 +32,13 @@ I followed the steps found [here](https://ubuntu.com/tutorials/tutorial-ubuntu-o
 * Search for name of new directory using ```ls```
 * Navigate to the directory you just cloned using ```cd /TOA-project```
 * Run ```gcc TOA-project/md5.c -o md5``` to generate the md5 from my code.
-* Run ```./md5 "YOUR TEST STRING"``` to get the MD5 hash of the string you inputted
+* Run ```./md5 -s "YOUR TEST STRING"``` to get the MD5 hash of the string you inputted
 
-# Test
+# Tests
+Run ```./md5 -h (any random string)``` for help.
+Run ```./md5 -t (any random string)```
+It shows the test subject, expected hash result and actual hash result
+I couldn't get this to work with just 2 arguements
 
 # Algorithm
 ![](images/MD5Algorithm1.png)
